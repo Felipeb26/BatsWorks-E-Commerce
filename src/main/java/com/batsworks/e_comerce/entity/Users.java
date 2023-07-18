@@ -1,22 +1,24 @@
 package com.batsworks.e_comerce.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.Table;
 
+@ToString
 @Getter
 @Setter
-@Entity
+@Builder
 @NoArgsConstructor
-public class Users {
+@AllArgsConstructor
+@Entity(name = "users")
+@Table(name = "users")
+public class Users extends AbstractyEntity<Users> {
 
-    @Id
-    private Integer id;
+    private String name;
+    @Column(unique = true)
     private String email;
-    private String fullName;
-    private String password;
+    private String secret;
 
 }
