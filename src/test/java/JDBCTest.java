@@ -1,6 +1,5 @@
 import com.batsworks.e_comerce.connection.UserRepository;
 import com.batsworks.e_comerce.entity.Users;
-import junit.framework.TestCase;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -10,6 +9,7 @@ import org.junit.runners.MethodSorters;
 import javax.persistence.*;
 import java.util.List;
 
+import static java.util.Objects.isNull;
 import static org.junit.Assert.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -17,6 +17,7 @@ public class JDBCTest {
     private static UserRepository repository;
     private static EntityManagerFactory entityManagerFactory;
     private static EntityManager manager;
+    private static int id = 0;
 
     @BeforeClass
     public static void beforeAll() {
@@ -32,6 +33,7 @@ public class JDBCTest {
         users.setEmail("felipeb2silva@gmail.com");
         users.setSecret("2626");
         users = repository.create(users);
+        id = users.getId();
         assertNotNull(users);
         sleep();
     }
@@ -71,9 +73,9 @@ public class JDBCTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void test_5_DeleteUser() {
-        repository.delete(6);
+        repository.delete(id);
         sleep();
-        Users users = repository.findOne(6);
+        Users users = repository.findOne(id);
         assertNull(users);
         sleep();
     }
