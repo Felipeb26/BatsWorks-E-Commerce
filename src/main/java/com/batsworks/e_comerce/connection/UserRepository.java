@@ -5,9 +5,9 @@ import com.batsworks.e_comerce.entity.Users;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-public class BatsWorksRepository extends JPADAO<Users> implements GenericDAO<Users> {
+public class UserRepository extends JPADAO<Users> implements GenericDAO<Users> {
 
-    public BatsWorksRepository(EntityManager entityManager) {
+    public UserRepository(EntityManager entityManager) {
         super(entityManager);
     }
 
@@ -26,17 +26,17 @@ public class BatsWorksRepository extends JPADAO<Users> implements GenericDAO<Use
 
     @Override
     public Users findOne(Object id) {
-        return super.findOne(id);
+        return super.findOne(Users.class, id);
     }
 
     @Override
     public void delete(Object id) {
-        super.delete(id);
+        super.delete(Users.class, id);
     }
 
     @Override
     public List<Users> listAll() {
-        return null;
+        return super.findAll(Users.class);
     }
 
     @Override

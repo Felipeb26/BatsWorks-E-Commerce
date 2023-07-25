@@ -2,14 +2,21 @@ package com.batsworks.e_comerce.connection;
 
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.Table;
+import java.util.List;
 
+import static java.util.Objects.isNull;
+
+@SuppressWarnings("unchecked")
 @RequiredArgsConstructor
 public class JPADAO<T> {
 
     protected final EntityManager entityManager;
 
-    public T create(T t) {
+    protected T create(T t) {
         entityManager.getTransaction().begin();
         entityManager.persist(t);
         entityManager.flush();
@@ -18,23 +25,35 @@ public class JPADAO<T> {
         return t;
     }
 
-    public T update(T entity) {
+    protected T update(T entity) {
         entityManager.getTransaction().begin();
         entity = entityManager.merge(entity);
         entityManager.getTransaction().commit();
         return entity;
     }
 
-    public void delete(Object id) {
+    protected void delete(Class<T> type, Object id) {
         entityManager.getTransaction().begin();
+        Object reference = entityManager.getReference(type, id);
+        entityManager.remove(reference);
         entityManager.getTransaction().commit();
     }
 
-    public T findOne(Object id){
-        entityManager.getTransaction().begin();
-//        entityManager.find(new T(), id)
-        entityManager.getTransaction().commit();
-        return (T) id;
+    protected T findOne(Class<T> type, Object id) {
+        T entity = entityManager.find(type, id);
+        entityManager.refresh(entity);
+        return entity;
     }
+
+    protected List<T> findAll(Class<T> type) {
+        String className = type.getSimpleName();
+        Table table = type.getAnnotation(Table.class);
+        String initial = className.substring(0, 1).toLowerCase();
+        className = isNull(table.name()) ? className : table.name();
+        Query query = entityManager.createQuery(String.format("SELECT %s FROM %s %s", initial, className, initial));
+        return query.getResultList();
+    }
+
+
 
 }

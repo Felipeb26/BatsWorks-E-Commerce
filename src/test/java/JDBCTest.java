@@ -1,19 +1,18 @@
-import com.batsworks.e_comerce.connection.BatsWorksRepository;
+import com.batsworks.e_comerce.connection.UserRepository;
 import com.batsworks.e_comerce.entity.Users;
 import junit.framework.TestCase;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceException;
+import javax.persistence.*;
 
-import static org.junit.Assert.assertEquals;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class JDBCTest {
-    private static BatsWorksRepository repository;
+    private static UserRepository repository;
     private static EntityManagerFactory entityManagerFactory;
     private static EntityManager manager;
 
@@ -21,7 +20,7 @@ public class JDBCTest {
     public static void beforeAll() {
         entityManagerFactory = Persistence.createEntityManagerFactory("BatsWorks_E_Commerce");
         manager = entityManagerFactory.createEntityManager();
-        repository = new BatsWorksRepository(manager);
+        repository = new UserRepository(manager);
     }
 
     @Test
@@ -41,6 +40,12 @@ public class JDBCTest {
     }
 
     @Test
+    public void testFindUser() {
+        Users users = repository.findOne(1);
+        assertNotNull(users);
+    }
+
+    @Test
     public void testUpdateUser() {
         Users users = new Users();
         users.setId(1);
@@ -51,6 +56,29 @@ public class JDBCTest {
         assertEquals("2626", users.getSecret());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void userNotFound() {
+        Users users = repository.findOne(99);
+        assertNull(users);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteUser() {
+        repository.delete(3);
+        Users users = repository.findOne(3);
+        assertNull(users);
+    }
+
+    @Test(expected = EntityNotFoundException.class)
+    public void testDeleteNonExistUsers(){
+        repository.delete(58);
+    }
+
+    @Test
+    public void testUserList(){
+        List<Users> users= repository.listAll();
+        assertFalse(users.isEmpty());
+    }
 
     @AfterClass
     public static void tearDownClass() {
