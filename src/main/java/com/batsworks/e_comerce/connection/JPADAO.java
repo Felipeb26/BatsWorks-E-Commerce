@@ -2,7 +2,6 @@ package com.batsworks.e_comerce.connection;
 
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.Table;
@@ -17,23 +16,23 @@ public class JPADAO<T> {
     protected final EntityManager entityManager;
 
     protected T create(T t) {
-        entityManager.getTransaction().begin();
+        transactionALreadyOpen(entityManager);
         entityManager.persist(t);
-        entityManager.flush();
+//        entityManager.flush();
         entityManager.refresh(t);
         entityManager.getTransaction().commit();
         return t;
     }
 
     protected T update(T entity) {
-        entityManager.getTransaction().begin();
+        transactionALreadyOpen(entityManager);
         entity = entityManager.merge(entity);
         entityManager.getTransaction().commit();
         return entity;
     }
 
     protected void delete(Class<T> type, Object id) {
-        entityManager.getTransaction().begin();
+        transactionALreadyOpen(entityManager);
         Object reference = entityManager.getReference(type, id);
         entityManager.remove(reference);
         entityManager.getTransaction().commit();
@@ -54,6 +53,11 @@ public class JPADAO<T> {
         return query.getResultList();
     }
 
+    private static void transactionALreadyOpen(final EntityManager entityManager) {
+        if (entityManager.getTransaction().isActive())
+            return;
+        entityManager.getTransaction().begin();
+    }
 
 
 }
