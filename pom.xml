@@ -126,9 +126,9 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <configLocation>checkystyle.xml</configLocation>
                     <outputEncoding>UTF-8</outputEncoding>
                     <linkXRef>false</linkXRef>
-                    <useFile>checkystyle.xml</useFile>
                     <failOnViolation>false</failOnViolation>
                     <failsOnError>false</failsOnError>
                     <suppressionsLocation>
