@@ -1,4 +1,4 @@
-<FindbugsPlugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<BugCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:noNamespaceSchemaLocation="findbugsplugin.xsd"
                 pluginid="edu.umd.cs.findbugs.plugins.core"
                 version="USE_FINDBUGS_VERSION"
@@ -1255,4 +1255,4 @@ reporting detectors have completed.
     <BugPattern abbrev="NP" type="NP_METHOD_RETURN_RELAXING_ANNOTATION" category="STYLE" />
     <BugPattern abbrev="NP" type="NP_METHOD_PARAMETER_TIGHTENS_ANNOTATION" category="STYLE" />
     <BugPattern abbrev="NP" type="NP_METHOD_PARAMETER_RELAXING_ANNOTATION" category="STYLE" deprecated="true" />
-</FindbugsPlugin>
+</BugCollection>
