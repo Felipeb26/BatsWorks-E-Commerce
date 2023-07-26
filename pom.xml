@@ -114,6 +114,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <useFile>checkystyle.xml</useFile>
                     <failOnViolation>false</failOnViolation>
                     <failsOnError>false</failsOnError>
                 </configuration>
