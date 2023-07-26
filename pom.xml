@@ -126,17 +126,10 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <configLocation>checkystyle.xml</configLocation>
                     <outputEncoding>UTF-8</outputEncoding>
                     <linkXRef>false</linkXRef>
                     <failOnViolation>false</failOnViolation>
                     <failsOnError>false</failsOnError>
-                    <suppressionsLocation>
-                        checkstyle-suppressions.xml
-                    </suppressionsLocation>
-                    <suppressionsFileExpression>
-                        checkstyle.suppressions.file
-                    </suppressionsFileExpression>
                 </configuration>
             </plugin>
         </plugins>
