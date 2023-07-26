@@ -80,6 +80,11 @@
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>3.0.0-M4</version>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.5</version>
+            </plugin>
         </plugins>
     </reporting>
 
@@ -102,6 +107,11 @@
                 <version>3.21.0</version>
             </plugin>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.5</version>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.3.0</version>
@@ -111,12 +121,22 @@
                         <goals>
                             <goal>check</goal>
                         </goals>
+                        <configuration>
+                        </configuration>
                     </execution>
                 </executions>
                 <configuration>
+                    <outputEncoding>UTF-8</outputEncoding>
+                    <linkXRef>false</linkXRef>
                     <useFile>checkystyle.xml</useFile>
                     <failOnViolation>false</failOnViolation>
                     <failsOnError>false</failsOnError>
+                    <suppressionsLocation>
+                        checkstyle-suppressions.xml
+                    </suppressionsLocation>
+                    <suppressionsFileExpression>
+                        checkstyle.suppressions.file
+                    </suppressionsFileExpression>
                 </configuration>
             </plugin>
         </plugins>
