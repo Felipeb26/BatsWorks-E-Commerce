@@ -5,10 +5,6 @@
                 provider="FindBugs project" website="http://findbugs.sourceforge.net"
                 update-url="http://update.findbugs.org/update-check">
 
-    <!--
-Plugin descriptor for FindBugs "core" plugin.
-This plugin is enabled by default.
--->
     <Cloud id="edu.umd.cs.findbugs.cloud.doNothingCloud"
            cloudClass="edu.umd.cs.findbugs.cloud.DoNothingCloud"
            usernameClass="edu.umd.cs.findbugs.cloud.username.NoNameLookup"/>
